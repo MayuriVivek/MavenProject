@@ -5,6 +5,7 @@ pipeline {
         steps{
 	  git url: 'https://github.com/MayuriVivek/MavenProject.git' , branch: 'main'
              }
+	}
        stage('building'){
 	steps{
 	sh 'mvn clean package'
@@ -23,4 +24,4 @@ pipeline {
 
           }
         }
-}
+       }
