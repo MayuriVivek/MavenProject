@@ -16,7 +16,7 @@ pipeline{
 	}
        stage('storing artifact in jenkins'){
 	steps{
-	archiveArtifacts artifact : 'target/*.war'
+	archiveArtifacts artifacts: 'target/*.war'
          }
        }
     }
