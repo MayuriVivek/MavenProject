@@ -31,16 +31,22 @@ pipeline {                                    // 1  // Defines the start of the 
         }                                     // 6  // Ends the 'test' stage
 
         stage('SonarQube analysis') {         // 8  // Creates a stage named 'SonarQube analysis'
-                                            // 9  // Ends the environment block for this stage
+            environment {                     // 9  // Defines environment variables specific to this stage
+                scannerHome = tool 'Sonarqube-scanner-tool'  
+                                              // Sets the SonarQube scanner tool
+            }                                 // 9  // Ends the environment block for this stage
+
             steps {                           // 10  // Defines the steps that will be executed in this stage
                 withSonarQubeEnv('Sonarqube-scanner-server') {
                                               // Executes the SonarQube analysis within the SonarQube environment
-                    sh "mvn sonar:sonar"  
+                    sh "${scannerHome}/bin/sonar-scanner"  
+                                              // Runs the SonarQube scanner tool
+                }                             // Ends the withSonarQubeEnv block
+            }      
                                               // Runs the SonarQube scanner tool
                 }                             // Ends the withSonarQubeEnv block
             }                                 // 10  // Ends the steps block for 'SonarQube analysis' stage
         }                                     // 8  // Ends the 'SonarQube analysis' stage
 
-    }                                         // 3  // Ends the stages block
-}                                             // 1  // Ends the pipeline block
+                                            // 3  // Ends the stages block                                            // 1  // Ends the pipeline block
 
