@@ -12,7 +12,7 @@ pipeline {                                    // 1  // Defines the start of the 
             steps {                           // 5  // Defines the steps that will be executed in this stage
                 echo "----------- build started ----------"  
                                               // Logs a message indicating the start of the build
-                sh 'mvn clean deploy -Dmaven.test.skip=true'  
+                sh 'mvn clean package -Dmaven.test.skip=true'  
                                               // Runs Maven clean and deploy commands, skipping tests
                 echo "----------- build completed ----------"  
                                               // Logs a message indicating the build completion
@@ -31,15 +31,11 @@ pipeline {                                    // 1  // Defines the start of the 
         }                                     // 6  // Ends the 'test' stage
 
         stage('SonarQube analysis') {         // 8  // Creates a stage named 'SonarQube analysis'
-            environment {                     // 9  // Defines environment variables specific to this stage
-                scannerHome = tool 'Sonarqube-scanner-tool'  
-                                              // Sets the SonarQube scanner tool
-            }                                 // 9  // Ends the environment block for this stage
-
+                                            // 9  // Ends the environment block for this stage
             steps {                           // 10  // Defines the steps that will be executed in this stage
                 withSonarQubeEnv('Sonarqube-scanner-server') {
                                               // Executes the SonarQube analysis within the SonarQube environment
-                    sh "${scannerHome}/bin/sonar-scanner"  
+                    sh "mvn sonar:sonar"  
                                               // Runs the SonarQube scanner tool
                 }                             // Ends the withSonarQubeEnv block
             }                                 // 10  // Ends the steps block for 'SonarQube analysis' stage
