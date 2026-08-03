@@ -39,7 +39,11 @@ pipeline {                                    // 1  // Defines the start of the 
             steps {                           // 10  // Defines the steps that will be executed in this stage
                 withSonarQubeEnv('Sonarqube-scanner-server') {
                                               // Executes the SonarQube analysis within the SonarQube environment
-                    sh "${scannerHome}/bin/sonar-scanner"  
+                   sh '''
+mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
+-Dsonar.projectKey=jenkinscicd-mykey_jenkinsproject \
+-Dsonar.organization=jenkinscicd-mykey
+'''
                                               // Runs the SonarQube scanner tool
                 }                             // Ends the withSonarQubeEnv block
             }      
