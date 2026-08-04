@@ -31,7 +31,7 @@ pipeline {                                    // 1  // Defines the start of the 
         }                                     // 6  // Ends the 'test' stage
 	stage("ArchiveArtifact"){
 		steps{
-	archiveArtifacts.artifacts ='target/*.war'
+	archiveArtifacts(artifacts:'target/*.war')
 		}
 	}
         stage('SonarQube analysis') {         // 8  // Creates a stage named 'SonarQube analysis'
