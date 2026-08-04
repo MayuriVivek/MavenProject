@@ -29,13 +29,15 @@ pipeline {                                    // 1  // Defines the start of the 
                                               // Logs a message indicating unit test completion
             }                                 // 7  // Ends the steps block for 'test' stage
         }                                     // 6  // Ends the 'test' stage
-
+	stage("ArchiveArtifact"){
+	archiveArtifacts.artifacts='/target/*.war'
+	}
         stage('SonarQube analysis') {         // 8  // Creates a stage named 'SonarQube analysis'
             environment {                     // 9  // Defines environment variables specific to this stage
                 scannerHome = tool 'Sonarqube-scanner-tool'  
                                               // Sets the SonarQube scanner tool
             }                                 // 9  // Ends the environment block for this stage
-
+	
             steps {                           // 10  // Defines the steps that will be executed in this stage
                 withSonarQubeEnv('Sonarqube-scanner-server') {
                                               // Executes the SonarQube analysis within the SonarQube environment
